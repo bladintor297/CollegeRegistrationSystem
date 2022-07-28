@@ -100,7 +100,7 @@ if ($_SESSION["Login"] != "YES") //if the user is not logged in or has been logg
         }
         const xhr = new XMLHttpRequest();
 
-        xhr.open('get', 'http://localhost/CollegeRegistrationSystem/api/studentinfo', true);
+        xhr.open('GET', 'http://localhost/CollegeRegistrationSystem/api/studentinfo', true);
         xhr.send();
         xhr.onload = function() {
             var item = JSON.parse(xhr.responseText);
@@ -112,7 +112,7 @@ if ($_SESSION["Login"] != "YES") //if the user is not logged in or has been logg
                 document.getElementById("ic").value = item[i].ic;
                 document.getElementById("matric").value = item[i].matric;
                 if (item[i].college == '' || item[i].college == null){
-                   document.getElementById("studentcollege").value = 'null'; 
+                   document.getElementById("studentcollege").value = null; 
                 }else{
                     document.getElementById("studentcollege").value = item[i].college; 
                 }
@@ -126,7 +126,7 @@ if ($_SESSION["Login"] != "YES") //if the user is not logged in or has been logg
             }
         }
 
-        form1.addEventListener("submit",function(e){
+    form1.addEventListener("submit",function(e){
     e.preventDefault();
 
     var id = document.getElementById("id").value;
@@ -145,7 +145,9 @@ if ($_SESSION["Login"] != "YES") //if the user is not logged in or has been logg
                     
                 }
             };
-    location.reload();
+    
+    window.location.href = 'http://localhost/CollegeRegistrationSystem/logout.php';
+    alert("Please relogin to update new data");
 
 })
     </script>

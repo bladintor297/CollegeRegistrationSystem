@@ -18,14 +18,14 @@ header("Location: ../index.php");
 	        <li class="navi"><a>College Registration System</a></li>
 	    	<li id="active-link" class="navi" style="float:right"><a href="../logout.php"><img src="../.css/image/whitelogout.png" alt="try" style = "width:default;height:25px;"></a></li>
 	    	<li class="navi" style="float:right"><a href="#about"><img src="../.css/image/user.png" alt="try" style = "width:default;height:24px;"></a></li>
-	    	<li class="navi" style="float:right"><a href="#about"><?php echo $_SESSION['USER'] ?></a></li>
+	    	<li class="navi" style="float:right"><a id="username" href="#about"></a></li>
 	    </ul>
 			<h2 class="menu-title">Accomodation Manager page</h2>
 
 		<div class="menu-container one">
 
 			<div class="menu-item approve">
-				<a href= "../approve/approve_IDform.php"><img class="menu-item-image" src="../.css/image/approve.svg" alt="Add"></a>
+				<a href= "../approve/approve_form.php"><img class="menu-item-image" src="../.css/image/approve.svg" alt="Add"></a>
 				<p class="menu-item-title">Approve/Reject Applications</p>
 			</div>
 
@@ -48,14 +48,23 @@ header("Location: ../index.php");
 
 		</div>
 
-	<!-- <h1>Main page</h1>
+		<script>
 
 
-	<a href= "../approve/approve_IDform.php"> Approve/Reject Applications</a> <br/><br/>
+	const xhr = new XMLHttpRequest();
+	xhr.open("GET", "http://localhost/CollegeRegistrationSystem/api/accom", true);
+    xhr.send();
+    xhr.onload = function () {
+        var item = JSON.parse(xhr.responseText);
 
-	<a href="../student/view_student3.php">View Sorted Report</a> <br/><br/>
-
-	<a href="update_am_form.php">Update My Data</a> <br/><br/> -->
+        for (let i = 0; i < item.length; i++) {
+			// alert(item[i])
+            document.getElementById("username").innerHTML = item[i].name;
+        }
+    
+	// alert (document.getElementById("username").value);
+	}
+</script>
 
 
 

@@ -46,6 +46,7 @@ header("Location: ../index.php");
 document.addEventListener("DOMContentLoaded",function(){
             //step 1
             var xht = new XMLHttpRequest();
+            // var id; 
 
             //step 2
             xht.open("GET", "http://localhost/CollegeRegistrationSystem/api/students_apprej_list", true);
@@ -56,7 +57,7 @@ document.addEventListener("DOMContentLoaded",function(){
             //step 4 - we do the process upon receving the response with status 200
             xht.onreadystatechange = function(){
                 if(this.readyState == 4 && this.status == 200){
-                    alert(this.responseText);
+                    // alert(this.responseText);
                     
                     var item = JSON.parse(this.responseText);
 
@@ -64,6 +65,7 @@ document.addEventListener("DOMContentLoaded",function(){
                     for (let i = 0; i < item.length; i++) {
                         content += "<tr><td>" + item[i].id + "</td>" + "<td>" + item[i].name + "</td>" + "<td>" + item[i].matric + "</td>" + "<td>" + item[i].ic + "</td>" + "<td>" + item[i].college + "</td>";
                         console.log(item);
+                        
                     }
                     document.getElementById("item").innerHTML = content;
                 }
@@ -74,12 +76,13 @@ document.addEventListener("DOMContentLoaded",function(){
                 }
             };
         }
+        
 )
-   
+
 
 </script>
 
-<FORM name="approve-button"  >
+<FORM name="getID"  method="GET" action="approve_form.php">
 <TABLE name="approveIDtable" border="0">
 	<TR>
         <TD>Which <b>ID</b> do you want to select?</TD>
@@ -100,7 +103,7 @@ document.addEventListener("DOMContentLoaded",function(){
 		if(id_input.value.length == 0)
 		{
 			e.preventDefault();
-			alert('Pleae insert a valid ID.');
+			alert('Pleae insert a valID ID.');
 			//return false;
 		}
 		else{
@@ -115,29 +118,7 @@ document.addEventListener("DOMContentLoaded",function(){
 <tr>
 	<TD><INPUT class="approve-button" type="submit" name="button1" id="approve-button" value="Confirm"></TD>
 </tr>
-
-<script>
-  document.getElementById("approve-button").addEventListener('click',function(e){
-    e.preventDefault();
-            var xht = new XMLHttpRequest();
-            
-            var id = document.getElementById("id").value;
-            
-            xht.open("PUT","http://localhost/CollegeRegistrationSystem/api/updateapprove/" + id,true);
-            xht.send();
-            
-
-            xht.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    const objects = JSON.parse(this.responseText);
-                    
-                }
-            };
-            location.reload();
-            
-
-        });
-</script>
+<!--  -->
 
 </TABLE>
 </FORM>

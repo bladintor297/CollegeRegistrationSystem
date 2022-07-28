@@ -2,7 +2,7 @@
 
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
+use \Slim\Http\Response as Response;
 require 'db.php';
 require '../vendor/autoload.php';
 
@@ -36,7 +36,7 @@ $app->get('/students_apprej_list', function (Request $request, Response $respons
 });
 
 //GET: Read approve/reject list (single ID)
-$app->get('/students_apprej_list/{id}', function (Request $request,  array $args) {
+$app->get('/students_apprej_list/{id}', function (Request $request, Response $response, array $args) {
     $id=$args['id'];
 
     $sql = "SELECT * FROM student  WHERE id= $id";
@@ -60,41 +60,87 @@ $app->get('/students_apprej_list/{id}', function (Request $request,  array $args
 
 });
 
-//PUT: Update APPROVE
-$app->put('/updateapprove/{id}', function (Request $request, Response $response, array $args) {
-    $id = $args['id'];
-    $input = $request->getParsedBody();
-    $sql = "UPDATE student SET approvalstatus = :1,  WHERE id = :id";
+//GET: Read college list 
+$app->get('/college_list', function (Request $request, Response $response, array $args) {
+    $sql = "SELECT * FROM college";
 
     try {
-        //get the db object
+        // Get DB Object
         $db = new db();
-        //connect
+        // Connect
         $db = $db->connect();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':approvalstatus', 1);
-        $stmt->execute();
-        $count = $stmt->rowCount();
+
+        $stmt = $db->query($sql);
+        $user = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        if($count == 0){
-            return $response->withJson(array('status' => 'Unsuccessful', 'message' => 'Failed to update'), 400);
-        }
-        $data = array(
-            'status' => 'success',
-            'message' => 'successfully update',
-        );
-        return $response->withJson($data, 200);
-
-
+        echo json_encode($user);
     } catch (PDOException $e) {
-        $error = array(
-            'status' => 'Error',
-            'message' => $e->getMessage(),
+        $data = array(
+            "status" => "fail"
         );
-        return $response->withJson($error, 400);
+        echo json_encode($data);
     }
+    return $response;
+});
 
+//GET: Read college list {id}
+$app->get('/college_list/{id}', function (Request $request, Response $response, array $args) {
+    $id=$args['id'];
+    $sql = "SELECT * FROM college WHERE id = $id" ;
+
+    try {
+        // Get DB Object
+        $db = new db();
+        // Connect
+        $db = $db->connect();
+
+        $stmt = $db->query($sql);
+        $user = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($user);
+    } catch (PDOException $e) {
+        $data = array(
+            "status" => "fail"
+        );
+        echo json_encode($data);
+    }
+    return $response;
+});
+
+//PUT: Update APPROVE
+$app->put('/updateapprove/{_name}/{_id}/{_college}/{_approvalstatus}', function (Request $request, Response $response, array $args) {
+    
+    $name = $request->getAttribute('_name');
+    $id = $request->getAttribute('_id');
+    $college = $request->getAttribute('_college');
+    $approvalstatus = $request->getAttribute('_approvalstatus');
+
+   
+    
+    $ic = $_SESSION["USERNAME"] ;
+    $smatric = $_SESSION["MATRIC"] ;
+    
+
+
+    try {
+        //get db object
+        $db = new db();
+        //conncect
+        $pdo = $db->connect();
+
+
+        $sql = "UPDATE student SET id =?, name=?, ic =?, college =?, matric =?, approvalstatus =? WHERE id=?";
+       
+
+
+        $pdo->prepare($sql)->execute([$id, $name, $ic, $college, $smatric, $approvalstatus, $id]);
+       
+
+        echo '{"notice": {"text": "Approval status '. $name .' has been just updated now"}}';
+        $pdo = null;
+    } catch (\PDOException $e) {
+        echo '{"error": {"text": ' . $e->getMessage() . '}}';
+    }
 
 });
 
@@ -124,8 +170,8 @@ $app->get('/students_detail_list', function (Request $request, Response $respons
 
 
 //GET: Read student detail (single Matric No.)
-$app->get('/student_detail_list/', function (Request $request, Response $response, array $args) {
-    $id=$args['matric'];
+$app->get('/student_detail_list/{matric}', function (Request $request, Response $response, array $args) {
+    // $id=$args['matric'];
     $matric = $_POST['matric'];
 
     $sql = "SELECT * FROM student WHERE matric = '$matric'";
@@ -151,7 +197,7 @@ $app->get('/student_detail_list/', function (Request $request, Response $respons
 
 //GET: Read Accomodation Manager Data
 $app->get('/accom', function (Request $request, Response $response, array $args) {
-    $id=$_SESSION['STAFFID'];
+    $id=$_SESSION['MATRIC'];
     
 
     $sql = "SELECT * FROM AccomodationManager WHERE staffID = '$id'";
@@ -217,6 +263,43 @@ $app->get('/accom', function (Request $request, Response $response, array $args)
 
 // });
 
+//GET
+$app->put('/updatequota/{name}/{studentID}/{approvalstatus}/{id}/{collegename}/{quota}/{available}', function (Request $request, Response $reponse, array $args) {
+    
+    $id = $request->getAttribute('id');
+    $collegename = $request->getAttribute('collegename');
+    $quota = $request->getAttribute('quota');
+    $available = $request->getAttribute('available');
+
+    $studentID = $request->getAttribute('studentID');
+    $name = $request->getAttribute('name');
+    $ic = $_SESSION["USERNAME"] ;
+    $smatric = $_SESSION["MATRIC"] ;
+    $approvalstatus =  $request->getAttribute('approvalstatus');
+
+
+    try {
+        //get db object
+        $db = new db();
+        //conncect
+        $pdo = $db->connect();
+
+
+        $sql = "UPDATE college SET collegename =?, quota=?, available =? WHERE id=?";
+        $sql2 = "UPDATE student SET college=?, id =?, name=?, ic =?, matric =?, approvalstatus=? WHERE id=?";
+
+
+        $pdo->prepare($sql)->execute([$collegename, $quota, $available, $id]);
+        $pdo->prepare($sql2)->execute([$collegename, $studentID, $name, $ic, $smatric, $approvalstatus, $studentID]);
+
+        echo '{"notice": {"text": "College '. $collegename .' has been just updated now"}}';
+        $pdo = null;
+    } catch (\PDOException $e) {
+        echo '{"error": {"text": ' . $e->getMessage() . '}}';
+    }
+});
+
+
 $app->put('/updatemanager/{id}/{staffID}/{name}/{ic}', function (Request $request, Response $reponse, array $args) {
     $id = $request->getAttribute('id');
     $staffid = $request->getAttribute('staffID');
@@ -242,7 +325,6 @@ $app->put('/updatemanager/{id}/{staffID}/{name}/{ic}', function (Request $reques
         echo '{"error": {"text": ' . $e->getMessage() . '}}';
     }
 });
-
 //delete user
 $app->delete('/user/{id}', function (Request $request, Response $response, array $args) {
     $id=$args['id'];
@@ -403,6 +485,10 @@ $app->put('/updatestudentinfo/{id}/{name}/{ic}/{matric}', function (Request $req
     $name = $request->getAttribute('name');
     $ic = $request->getAttribute('ic');
     $matric = $request->getAttribute('matric');
+    // $username = $_SESSION["USERNAME"] ;
+    $password = $_SESSION["PASSWORD"] ;
+    $level = $_SESSION["LEVEL"] ;
+    $smatric = $_SESSION["MATRIC"] ;
 
         try {
         //get db object
@@ -412,9 +498,11 @@ $app->put('/updatestudentinfo/{id}/{name}/{ic}/{matric}', function (Request $req
 
 
         $sql = "UPDATE student SET name =?, ic=?, matric =? WHERE id=?";
+        $sql2 = "UPDATE user SET username=?, password=?, level =?, matric =? WHERE matric=?";
 
 
         $pdo->prepare($sql)->execute([$name, $ic,$matric, $id]);
+        $pdo->prepare($sql2)->execute([$ic, $password, $level, $matric, $smatric]);
 
         echo '{"notice": {"text": "User '. $name .' has been just updated now"}}';
         $pdo = null;

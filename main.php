@@ -21,7 +21,7 @@ if ($_SESSION["Login"] != "YES") //if the user is not logged in or has been logg
         <div>
           <?php
           if ($_SESSION["LEVEL"] == 2)
-            echo '<a href="am/am.php"><img class="main-item-image" src=".css/image/avatar.svg" alt="Avatar"></a>';
+            echo '<a href="accomodation_manager/am.php"><img class="main-item-image" src=".css/image/avatar.svg" alt="Avatar"></a>';
           ?>
 
           <?php

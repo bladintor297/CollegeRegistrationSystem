@@ -24,7 +24,7 @@ header("Location: ../index.php");
 		<div class="menu-container one">
 
 			<div class="menu-item apply">
-				<a href="../college/college_form.php"><img class="menu-item-image" src="../.css/image/College.svg" alt="Add"></a>
+				<a href="apply_college.php"><img class="menu-item-image" src="../.css/image/College.svg" alt="Add"></a>
 				<p class="menu-item-title">Apply College</p>
 			</div>
 
@@ -50,7 +50,6 @@ header("Location: ../index.php");
 
 
 const xhr = new XMLHttpRequest();
-
     xhr.open('get', 'http://localhost/CollegeRegistrationSystem/api/studentinfo', true);
     xhr.send();
     xhr.onload = function () {
@@ -60,7 +59,6 @@ const xhr = new XMLHttpRequest();
             document.getElementById("username").innerHTML = item[i].name;
         }
     }
-
 </script>
 	</body>
 	</html>

@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded",function(){
             var xht = new XMLHttpRequest();
 
             //step 2
-            xht.open("GET", "http://localhost/CollegeRegistrationSystem/api/students_apprej_list", true);
+            xht.open("GET", "https://college-registration-system.herokuapp.com/api/students_apprej_list", true);
 
             //step 3
             xht.send();

@@ -98,7 +98,7 @@ if ($_SESSION["LEVEL"] == 1 || $_SESSION["LEVEL"] == 2) {   //only user with acc
 
 <script>
 	const xhr = new XMLHttpRequest();
-	xhr.open("GET", "http://localhost/CollegeRegistrationSystem/api/accom", true);
+	xhr.open("GET", "https://college-registration-system.herokuapp.com/api/accom", true);
     xhr.send();
     xhr.onload = function () {
         var item = JSON.parse(xhr.responseText);
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded",function(){
             var xht = new XMLHttpRequest();
 
             //step 2
-            xht.open("GET", "http://localhost/CollegeRegistrationSystem/api/students_detail_list", true);
+            xht.open("GET", "https://college-registration-system.herokuapp.com/api/students_detail_list", true);
 
             //step 3
             xht.send();

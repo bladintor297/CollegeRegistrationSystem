@@ -40,7 +40,7 @@ header("Location: index.php");
 
 const xhr = new XMLHttpRequest();
 
-    xhr.open('get', 'http://localhost/CollegeRegistrationSystem/api/studentinfo', true);
+    xhr.open('get', 'https://college-registration-system.herokuapp.com/api/studentinfo', true);
     xhr.send();
     xhr.onload = function () {
         var item = JSON.parse(xhr.responseText);

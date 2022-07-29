@@ -112,7 +112,7 @@ if ($_SESSION["LEVEL"] == 1 || $_SESSION["LEVEL"] == 2) {   //only user with acc
             var xht = new XMLHttpRequest();
 
             //step 2
-            xht.open("GET", "http://localhost/CollegeRegistrationSystem/api/students_detail_list", true);
+            xht.open("GET", "https://college-registration-system.herokuapp.com/api/students_detail_list", true);
 
             //step 3
             xht.send();
@@ -200,7 +200,7 @@ if ($_SESSION["LEVEL"] == 1 || $_SESSION["LEVEL"] == 2) {   //only user with acc
         var _approvalstatus;
         
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://localhost/CollegeRegistrationSystem/api/students_apprej_list/" + id, true);
+        xhr.open("GET", "https://college-registration-system.herokuapp.com/api/students_apprej_list/" + id, true);
         xhr.send();
         xhr.onload = function () {
             var item = JSON.parse(xhr.responseText);
@@ -224,7 +224,7 @@ if ($_SESSION["LEVEL"] == 1 || $_SESSION["LEVEL"] == 2) {   //only user with acc
 
         alert(_name +""+ id);
         const xhx = new XMLHttpRequest();
-        xhx.open("PUT", "http://localhost/CollegeRegistrationSystem/api/updateapprove/" + _name + "/" + _id + "/" + _college + "/" + _approvalstatus, true);
+        xhx.open("PUT", "https://college-registration-system.herokuapp.com/api/updateapprove/" + _name + "/" + _id + "/" + _college + "/" + _approvalstatus, true);
         xhx.send();
             
             xhx.onreadystatechange = function () {
@@ -246,7 +246,7 @@ if ($_SESSION["LEVEL"] == 1 || $_SESSION["LEVEL"] == 2) {   //only user with acc
             
 
             //step 2
-            xht.open("GET", "http://localhost/CollegeRegistrationSystem/api/college_list/" + _id, true);
+            xht.open("GET", "https://college-registration-system.herokuapp.com/api/college_list/" + _id, true);
             
             //step 3
             xht.send();

@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded",function(){
             var xht = new XMLHttpRequest();
 
             //step 2
-            xht.open("GET", "http://localhost/CollegeRegistrationSystem/api/accom", true);
+            xht.open("GET", "https://college-registration-system.herokuapp.com/api/accom", true);
 
             //step 3
             xht.send();
@@ -111,7 +111,7 @@ form1.addEventListener("submit",function(e){
     // alert(ic);
     var xht = new XMLHttpRequest();
 
-    xht.open("PUT","http://localhost/CollegeRegistrationSystem/api/updatemanager/" + id + "/" + staffid + "/" + name + "/" + ic,true);
+    xht.open("PUT","https://college-registration-system.herokuapp.com/api/updatemanager/" + id + "/" + staffid + "/" + name + "/" + ic,true);
     xht.send();
             
             xht.onreadystatechange = function () {

@@ -109,7 +109,7 @@ header("Location: ../index.php");
             var xht = new XMLHttpRequest();
 
             //step 2
-            xht.open("GET", "http://localhost/CollegeRegistrationSystem/api/studentinfo", true);
+            xht.open("GET", "https://college-registration-system.herokuapp.com/api/studentinfo", true);
 
             //step 3
             xht.send();
@@ -164,7 +164,7 @@ header("Location: ../index.php");
             // let collegename="", quota =0; available=0;
 
             //step 2
-            xht.open("GET", "http://localhost/CollegeRegistrationSystem/api/college_list", true);
+            xht.open("GET", "https://college-registration-system.herokuapp.com/api/college_list", true);
 
             //step 3
             xht.send();
@@ -220,7 +220,7 @@ header("Location: ../index.php");
         if (available > 0){
         var xht = new XMLHttpRequest();
 
-    xht.open("PUT","http://localhost/CollegeRegistrationSystem/api/updatequota/" + name + "/"+ studentID + "/" + approvalStatus + "/" + id + "/" + collegename + "/" + quota + "/" + (available-1),true);
+    xht.open("PUT","https://college-registration-system.herokuapp.com/api/updatequota/" + name + "/"+ studentID + "/" + approvalStatus + "/" + id + "/" + collegename + "/" + quota + "/" + (available-1),true);
     xht.send();
             
             xht.onreadystatechange = function () {
@@ -231,7 +231,7 @@ header("Location: ../index.php");
                 }
             };
             alert('College Applied Succesfully !');
-            window.location.href = 'http://localhost/CollegeRegistrationSystem/student/view_application.php';
+            window.location.href = 'https://college-registration-system.herokuapp.com/student/view_application.php';
     } else alert (collegename + " is fully occupied.");
     } else 
     alert (" You have already applied for " + collegename);

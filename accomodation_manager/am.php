@@ -52,7 +52,7 @@ header("Location: ../index.php");
 
 
 	const xhr = new XMLHttpRequest();
-	xhr.open("GET", "http://localhost/CollegeRegistrationSystem/api/accom", true);
+	xhr.open("GET", "https://college-registration-system.herokuapp.com/api/accom", true);
     xhr.send();
     xhr.onload = function () {
         var item = JSON.parse(xhr.responseText);

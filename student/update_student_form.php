@@ -100,7 +100,7 @@ if ($_SESSION["Login"] != "YES") //if the user is not logged in or has been logg
         }
         const xhr = new XMLHttpRequest();
 
-        xhr.open('GET', 'http://localhost/CollegeRegistrationSystem/api/studentinfo', true);
+        xhr.open('GET', 'https://college-registration-system.herokuapp.com/api/studentinfo', true);
         xhr.send();
         xhr.onload = function() {
             var item = JSON.parse(xhr.responseText);
@@ -136,7 +136,7 @@ if ($_SESSION["Login"] != "YES") //if the user is not logged in or has been logg
 
     var xht = new XMLHttpRequest();
 
-    xht.open("PUT","http://localhost/CollegeRegistrationSystem/api/updatestudentinfo/" + id + "/" + name + "/" + ic + "/" + matric,true);
+    xht.open("PUT","https://college-registration-system.herokuapp.com/api/updatestudentinfo/" + id + "/" + name + "/" + ic + "/" + matric,true);
     xht.send();
             
             xht.onreadystatechange = function () {
@@ -146,7 +146,7 @@ if ($_SESSION["Login"] != "YES") //if the user is not logged in or has been logg
                 }
             };
     
-    window.location.href = 'http://localhost/CollegeRegistrationSystem/logout.php';
+    window.location.href = 'https://college-registration-system.herokuapp.com/logout.php';
     alert("Please relogin to update new data");
 
 })

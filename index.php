@@ -66,19 +66,19 @@
     var xhr = new XMLHttpRequest();
 
 
-    xhr.open("post", "http://localhost/CollegeRegistrationSystem/api/login", true);
+    xhr.open("post", "https://college-registration-system.herokuapp.com/api/login", true);
 
     xhr.onload = function() {
 
       if (xhr.readyState === xhr.DONE) {
         if (xhr.responseText.trim() == "2") {
           alert("Login as Accomodation Manager");
-          window.location.href = 'http://localhost/CollegeRegistrationSystem/main.php';
+          window.location.href = 'https://college-registration-system.herokuapp.com/main.php';
 
         }
         else if (xhr.responseText.trim() == "3") {
           alert("Login as Student");
-          window.location.href = 'http://localhost/CollegeRegistrationSystem/main.php';
+          window.location.href = 'https://college-registration-system.herokuapp.com/main.php';
 
         } else {
           alert("Please enter valid and registered username or password!");
